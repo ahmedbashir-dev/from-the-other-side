@@ -1,12 +1,16 @@
 import path from "node:path";
 import fs from "node:fs/promises"
 import { sendResponse } from "./sendResponse.js";
+import { getContentType } from "./getContentType.js";
 
-export async function serveStatic(req, res, baseDir, filename, mime, status) {
-    const filePath = path.join(baseDir, 'public', filename);
+export async function serveStatic(req, res, baseDir, status) {
+    const publicDir = path.join(baseDir, 'public');
+    const pathToResource = path.join(publicDir, req.url === '/' ? 'index.html' : req.url);
+    const ext = path.extname(pathToResource);
+    const contentType = getContentType(ext);
     try {
-        const content = await fs.readFile(filePath);
-        sendResponse(res, mime, status, content);
+        const content = await fs.readFile(pathToResource);
+        sendResponse(res, status, contentType, content);
     } catch (err) {
         console.log(err);
     }
