@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ahmedbashir-dev/from-the-other-side#readme",
   "dependencies": {
-    "node": "^20.19.4"
+    "node": "^20.19.4",
+    "sanitize-html": "^2.17.0"
   }
 }
